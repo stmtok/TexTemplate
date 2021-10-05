@@ -8,7 +8,9 @@ TEX=uplatex --output-directory=$(OUTPUT) -synctex=1 -kanji=utf8 -interaction=non
 BIB=upbibtex
 OUTFILE=$(OUTPUT)/$(TARGET)
 # DVI経由PDF出力
-all: $(OUTFILE).pdf
+pdf: $(OUTFILE).pdf
+ps: $(OUTFILE).ps
+all: $(OUTFILE).pdf $(OUTFILE).ps
 
 # 出力先ディレクトリ作成
 $(OUTPUT):
@@ -22,20 +24,21 @@ $(OUTFILE).dvi: $(TARGET).tex *.tex $(OUTPUT)
 $(OUTFILE).bbl: $(TARGET).tex $(TARGET).bib $(OUTPUT)
 	$(TEX) $<; $(BIB) $(OUTFILE); $(TEX) $<; $(TEX) $<
 
+# PS出力
+$(OUTFILE).ps: $(OUTFILE).dvi $(OUTFILE).bbl $(OUTPUT)
+	dvips -o $@ $<
+
 # DVIファイルからPDF出力
 $(OUTFILE).pdf: $(OUTFILE).dvi $(OUTFILE).bbl $(OUTPUT)
 	dvipdfmx -o $@ $<
 
 # PS経由PDF出力
-# $(OUTFILE).ps: $(OUTFILE).dvi $(OUTFILE).bbl $(OUTPUT)
-# 	dvips -o $@ $<
-
 # $(OUTFILE).pdf: $(OUTFILE).ps
 # 	ps2pdf $< $@
 
 
 # 生成物の削除
 clean:
-	rm -rf $(OUTFILE).pdf $(OUTFILE).aux $(OUTFILE).bbl $(OUTFILE).blg $(OUTFILE).dvi $(OUTFILE).log $(OUTFILE).synctex*
+	rm -rf $(OUTFILE).pdf $(OUTFILE).ps $(OUTFILE).aux $(OUTFILE).bbl $(OUTFILE).blg $(OUTFILE).dvi $(OUTFILE).log $(OUTFILE).synctex*
 
-.PHONE: all clean
+.PHONE: all pdf ps clean

@@ -15,7 +15,7 @@
             "name": "make",
             "command": "make",
             "args": [
-                "all"
+                "pdf"
             ],
             "env": {
                 "PATH": "/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Tex/texbin"
