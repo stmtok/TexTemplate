@@ -1,25 +1,39 @@
 {
     "latex-workshop.latex.outDir": "out",
     "latex-workshop.latex.autoBuild.run": "onFileChange",
-    "latex-workshop.view.pdf.viewer": "tab",
+    "latex-workshop.view.pdf.viewer": "browser",
+    "latex-workshop.latex.recipe.default": "first",
     "latex-workshop.latex.recipes": [
+        {
+            "name": "latexmk",
+            "tools": [
+                "latexmk"
+            ],
+        },
         {
             "name": "make",
             "tools": [
-                "make",
-            ],
+                "make"
+            ]
         }
     ],
     "latex-workshop.latex.tools": [
+        {
+            "name": "latexmk",
+            "command": "latexmk",
+            "args": [
+                "-outdir=%OUTDIR%",
+                "%DOC%"
+            ],
+            "env": {}
+        },
         {
             "name": "make",
             "command": "make",
             "args": [
                 "pdf"
             ],
-            "env": {
-                "PATH": "/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Tex/texbin"
-            }
+            "env": {}
         }
     ]
 }
