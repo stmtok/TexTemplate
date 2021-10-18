@@ -67,7 +67,7 @@ $(DIFFFILE).dvi: $(DIFFFILE).tex $(DIFFFILE).bib
 
 # diff tex生成 (git)
 $(DIFFFILE).tex: $(TARGET).tex *.tex
-	latexdiff-vc --git -e utf8 -r $(REV) --flatten --force -d $(DIFFDIR) $(TARGET).tex
+	latexdiff-vc --git -e utf8 -r $(REV) -t CFONT --flatten --force -d $(DIFFDIR) $(TARGET).tex
 
 # 生成物の削除
 clean:
