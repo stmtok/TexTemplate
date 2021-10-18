@@ -3,14 +3,27 @@ TARGET=main
 # 出力先ディレクトリ名
 OUTPUT=out
 # Texコマンド
-TEX=uplatex --output-directory=$(OUTPUT) -synctex=1 -kanji=utf8 -interaction=nonstopmode
+TEX=uplatex
+# 通常Texオプション
+TEXOPTION=--output-directory=$(OUTPUT) -synctex=1 -kanji=utf8 -interaction=nonstopmode
 # BibTexコマンド
 BIB=upbibtex
+# 出力ファイル
 OUTFILE=$(OUTPUT)/$(TARGET)
+# diff リビジョン
+REV=ffa3abc11cc6133d01b8d92ac17662b94addde62
+# diff出力先ディレクトリ名
+DIFFDIR=diff
+# diff TEXオプション
+DIFFTEXOPTION=--output-directory=$(DIFFDIR) -kanji=utf8 -interaction=nonstopmode
+# diff出力ファイル
+DIFFFILE=$(DIFFDIR)/$(TARGET)
+
 # DVI経由PDF出力
 pdf: $(OUTFILE).pdf
 ps: $(OUTFILE).ps
-all: $(OUTFILE).pdf $(OUTFILE).ps
+diff: $(DIFFFILE).pdf
+all: $(OUTFILE).pdf $(OUTFILE).ps $(DIFFFILE).pdf
 
 # 出力先ディレクトリ作成
 $(OUTPUT):
@@ -18,11 +31,11 @@ $(OUTPUT):
 
 # DVI出力
 $(OUTFILE).dvi: $(TARGET).tex *.tex $(OUTPUT)
-	$(TEX) $<; $(TEX) $<; $(TEX) $<;
+	$(TEX) $(TEXOPTION) $<; $(TEX) $(TEXOPTION) $<; $(TEX) $(TEXOPTION) $<;
 
 # Bib中間ファイル出力
 $(OUTFILE).bbl: $(TARGET).tex $(TARGET).bib $(OUTPUT)
-	$(TEX) $<; $(BIB) $(OUTFILE); $(TEX) $<; $(TEX) $<
+	$(TEX) $(TEXOPTION) $<; $(BIB) $(OUTFILE); $(TEX) $(TEXOPTION) $<; $(TEX) $(TEXOPTION) $<
 
 # PS出力
 $(OUTFILE).ps: $(OUTFILE).dvi $(OUTFILE).bbl $(OUTPUT)
@@ -36,9 +49,28 @@ $(OUTFILE).pdf: $(OUTFILE).dvi $(OUTFILE).bbl $(OUTPUT)
 # $(OUTFILE).pdf: $(OUTFILE).ps
 # 	ps2pdf $< $@
 
+# diff pdf生成
+$(DIFFFILE).pdf: $(DIFFFILE).dvi $(DIFFFILE).bbl 
+	dvipdfmx -o $@ $<
+
+# bibはコピー
+$(DIFFFILE).bib: $(TARGET).bib
+	cp $< $@
+
+# bib中間ファイル生成
+$(DIFFFILE).bbl: $(DIFFFILE).tex $(DIFFFILE).bib
+	$(TEX) $(DIFFTEXOPTION) $<; $(BIB) $(DIFFFILE); $(TEX) $(DIFFTEXOPTION) $<; $(TEX) $(DIFFTEXOPTION) $<
+
+# dviファイル生成
+$(DIFFFILE).dvi: $(DIFFFILE).tex $(DIFFFILE).bib
+	$(TEX) $(DIFFTEXOPTION) $<; $(TEX) $(DIFFTEXOPTION) $<; $(TEX) $(DIFFTEXOPTION) $<;
+
+# diff tex生成 (git)
+$(DIFFFILE).tex: $(TARGET).tex *.tex
+	latexdiff-vc --git -e utf8 -r $(REV) --flatten --force -d $(DIFFDIR) $(TARGET).tex
 
 # 生成物の削除
 clean:
-	rm -rf $(OUTFILE).pdf $(OUTFILE).ps $(OUTFILE).aux $(OUTFILE).bbl $(OUTFILE).blg $(OUTFILE).dvi $(OUTFILE).log $(OUTFILE).synctex*
+	rm -rf diff out
 
-.PHONE: all pdf ps clean
+.PHONE: all pdf ps clean diff

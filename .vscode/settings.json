@@ -1,6 +1,9 @@
 {
     "latex-workshop.latex.outDir": "out",
     "latex-workshop.latex.autoBuild.run": "onFileChange",
+    "latex-workshop.latex.search.rootFiles.exclude": [
+        "diff/**"
+    ],
     "latex-workshop.view.pdf.viewer": "browser",
     "latex-workshop.latex.recipe.default": "first",
     "latex-workshop.latex.recipes": [
@@ -11,7 +14,7 @@
             ],
         },
         {
-            "name": "make",
+            "name": "diff",
             "tools": [
                 "make"
             ]
@@ -31,7 +34,7 @@
             "name": "make",
             "command": "make",
             "args": [
-                "pdf"
+                "diff"
             ],
             "env": {}
         }
