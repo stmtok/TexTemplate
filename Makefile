@@ -11,7 +11,7 @@ BIB=upbibtex
 # 出力ファイル
 OUTFILE=$(OUTPUT)/$(TARGET)
 # diff リビジョン
-REV=ffa3abc11cc6133d01b8d92ac17662b94addde62
+REV=b4369276d35135f0dbdc1aeeb32d7d7ba25a7b21
 # diff出力先ディレクトリ名
 DIFFDIR=diff
 # diff TEXオプション
