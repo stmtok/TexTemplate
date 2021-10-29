@@ -19,11 +19,10 @@ DIFFTEXOPTION=--output-directory=$(DIFFDIR) -kanji=utf8 -interaction=nonstopmode
 # diff出力ファイル
 DIFFFILE=$(DIFFDIR)/$(TARGET)
 
+.PHONE: all pdf
 # DVI経由PDF出力
 pdf: $(OUTFILE).pdf
-ps: $(OUTFILE).ps
-diff: $(DIFFFILE).pdf
-all: $(OUTFILE).pdf $(OUTFILE).ps $(DIFFFILE).pdf
+all: images $(OUTFILE).pdf $(DIFFFILE).pdf
 
 # 出力先ディレクトリ作成
 $(OUTPUT):
@@ -37,17 +36,9 @@ $(OUTFILE).dvi: $(TARGET).tex *.tex $(OUTPUT)
 $(OUTFILE).bbl: $(TARGET).tex $(TARGET).bib $(OUTPUT)
 	$(TEX) $(TEXOPTION) $<; $(BIB) $(OUTFILE); $(TEX) $(TEXOPTION) $<; $(TEX) $(TEXOPTION) $<
 
-# PS出力
-$(OUTFILE).ps: $(OUTFILE).dvi $(OUTFILE).bbl $(OUTPUT)
-	dvips -o $@ $<
-
 # DVIファイルからPDF出力
 $(OUTFILE).pdf: $(OUTFILE).dvi $(OUTFILE).bbl $(OUTPUT)
 	dvipdfmx -o $@ $<
-
-# PS経由PDF出力
-# $(OUTFILE).pdf: $(OUTFILE).ps
-# 	ps2pdf $< $@
 
 # diff pdf生成
 $(DIFFFILE).pdf: $(DIFFFILE).dvi $(DIFFFILE).bbl 
@@ -66,11 +57,18 @@ $(DIFFFILE).dvi: $(DIFFFILE).tex $(DIFFFILE).bib
 	$(TEX) $(DIFFTEXOPTION) $<; $(TEX) $(DIFFTEXOPTION) $<; $(TEX) $(DIFFTEXOPTION) $<;
 
 # diff tex生成 (git)
+.PHONY: diff
+diff: $(DIFFFILE).pdf
+
 $(DIFFFILE).tex: $(TARGET).tex *.tex
 	latexdiff-vc --git -e utf8 -r $(REV) -t CFONT --flatten --force -d $(DIFFDIR) $(TARGET).tex
 
-# 生成物の削除
-clean:
-	rm -rf diff out
+.PHONY: images
+images:
+	cd images/src; make; cd ../..
 
-.PHONE: all pdf ps clean diff
+# 生成物の削除
+.PHONY: clean
+clean:
+	cd images/src; make clean; cd ../..
+	rm -rf diff out

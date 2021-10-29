@@ -16,12 +16,6 @@
             "tools": [
                 "latexmk"
             ],
-        },
-        {
-            "name": "diff",
-            "tools": [
-                "make"
-            ]
         }
     ],
     "latex-workshop.latex.tools": [
@@ -31,14 +25,6 @@
             "args": [
                 "-outdir=%OUTDIR%",
                 "%DOC%"
-            ],
-            "env": {}
-        },
-        {
-            "name": "make",
-            "command": "make",
-            "args": [
-                "diff"
             ],
             "env": {}
         }
