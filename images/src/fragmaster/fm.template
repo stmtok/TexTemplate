@@ -1,0 +1,6 @@
+% fmclass: article
+% fmclassopt: 12pt
+% fmopt: width=10cm
+% head:
+% \usepackage{bm}
+% end head

@@ -1,0 +1,20 @@
+% fmclass: article
+% fmclassopt: 12pt
+% fmopt: width=20cm
+% head:
+% \usepackage{bm}
+% end head
+\psfrag{theta}{$\theta$}
+\psfrag{y}{$y$}
+\psfrag{sin(x)}{$sin(x)$}
+\psfrag{cos(x)}{$cos(x)$}
+\psfrag{tan(x)}{$tan(x)$}
+\psfrag{-2p}{$-2\pi$}
+\psfrag{-p3/2}{$-3\pi/2$}
+\psfrag{-p}{$-\pi$}
+\psfrag{-p/2}{$-\pi/2$}
+\psfrag{0}{0}
+\psfrag{p/2}{$\pi/2$}
+\psfrag{p}{$\pi$}
+\psfrag{p3/2}{$3\pi/2$}
+\psfrag{2p}{$2\pi$}
