@@ -2,17 +2,11 @@ SRCS = $(wildcard *.obj)
 OUTS = $(SRCS:.obj=.eps)
 
 .PHONY: all
-all: eps copy
+all: $(OUTS)
 
-.PHONY: eps
-eps: $(OUTS)
-
-$(OUTS): $(SRCS)
-	tgif -print -color -eps $(@:eps=obj)
-
-.PHONY: copy
-copy: $(OUTS)
-	cp $? ../../
+%.eps: %.obj
+	tgif -print -color -eps $<
+	cp -a $@ ../../
 
 .PHONY: clean
 clean:

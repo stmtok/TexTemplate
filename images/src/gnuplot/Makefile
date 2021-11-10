@@ -2,17 +2,11 @@ SRCS = $(wildcard *.plt)
 OUTS = $(SRCS:.plt=.eps)
 
 .PHONY: all
-all: eps copy
+all: $(OUTS)
 
-.PHONY: eps
-eps: $(OUTS)
-
-$(OUTS): $(SRCS)
-	gnuplot -c $(@:eps=plt)
-
-.PHONY: copy
-copy: $(OUTS)
-	cp $? ../../
+%.eps: %.plt
+	gnuplot -c $<
+	cp -a $@ ../../
 
 .PHONY: clean
 clean:
