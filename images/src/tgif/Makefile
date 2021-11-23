@@ -1,13 +1,17 @@
 SRCS = $(wildcard *.obj)
-OUTS = $(SRCS:.obj=.eps)
+OUTDIR = ./dist
+EPSS = $(addprefix $(OUTDIR)/, $(SRCS:.obj=.eps))
 
 .PHONY: all
-all: $(OUTS)
+all: $(OUTDIR) $(EPSS)
 
-%.eps: %.obj
-	tgif -print -color -eps $<
+$(OUTDIR):
+	mkdir -p $(OUTDIR)
+
+$(OUTDIR)/%.eps: %.obj
+	tgif -print -color -eps -o$(OUTDIR) $<
 	cp -a $@ ../../
 
 .PHONY: clean
 clean:
-	rm -f $(OUTS)
+	rm -rf $(OUTDIR)

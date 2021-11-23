@@ -1,0 +1,16 @@
+# 出力ファイル名
+OUTPUT_FILE = ARG0.".eps"
+if (exists("ARG1")) OUTPUT_FILE = ARG1
+
+# epsで出力
+set terminal postscript eps size 8cm, 3cm color
+set output "/dev/null"
+set samples 5000
+set grid
+
+# 描画
+plot sin(x)
+
+# ファイル出力
+set output OUTPUT_FILE
+replot

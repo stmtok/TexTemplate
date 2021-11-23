@@ -1,13 +1,17 @@
 SRCS = $(wildcard *.plt)
-OUTS = $(SRCS:.plt=.eps)
+OUTDIR = ./dist
+OUTS = $(addprefix $(OUTDIR)/, $(SRCS:.plt=.eps))
 
 .PHONY: all
-all: $(OUTS)
+all: $(OUTDIR) $(OUTS)
 
-%.eps: %.plt
-	gnuplot -c $<
+$(OUTDIR):
+	mkdir -p $(OUTDIR)
+
+$(OUTDIR)/%.eps: %.plt
+	gnuplot -c $< $(OUTDIR)/$(<:.plt=.eps) 
 	cp -a $@ ../../
 
 .PHONY: clean
 clean:
-	rm -f $(OUTS)
+	rm -rf $(OUTDIR)
