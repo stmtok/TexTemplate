@@ -1,5 +1,7 @@
 gnuplot/*.eps
+gnuplot/dist
 tgif/*.eps
+tgif/dist
 fragmaster/*.eps
 fragmaster/*.pdf
 fragmaster/fragmaster.*

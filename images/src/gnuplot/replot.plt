@@ -1,5 +1,7 @@
 # 出力ファイル名
-OUTPUT_FILENAME = "replot.eps"
+OUTPUT_FILE = ARG0.".eps"
+if (exists("ARG1")) OUTPUT_FILE = ARG1
+
 WIDTH="8cm"
 HEIGHT="4cm"
 SAMPLES=5000
@@ -36,5 +38,5 @@ replot cos(x) title "cos(x)"
 replot tan(x) title "tan(x)"
 
 # ファイル出力
-set output OUTPUT_FILENAME
+set output OUTPUT_FILE
 replot

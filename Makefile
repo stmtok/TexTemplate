@@ -65,10 +65,10 @@ $(DIFFFILE).tex: $(TARGET).tex *.tex
 
 .PHONY: images
 images:
-	cd images/src; make; cd ../..
+	$(MAKE) -C images/src
 
 # 生成物の削除
 .PHONY: clean
 clean:
-	cd images/src; make clean; cd ../..
+	$(MAKE) -C images/src clean
 	rm -rf diff out

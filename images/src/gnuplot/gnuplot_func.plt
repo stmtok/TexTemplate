@@ -1,5 +1,7 @@
 # 出力ファイル名
-OUTPUT_FILENAME = "gnuplot_func.eps"
+OUTPUT_FILE = ARG0.".eps"
+if (exists("ARG1")) OUTPUT_FILE = ARG1
+
 WIDTH="8cm"
 HEIGHT="3cm"
 SAMPLES=5000
@@ -29,5 +31,5 @@ set ylabel "y"
 plot max(sin(x), 0) title "sin(x) > 0"
 
 # ファイル出力
-set output OUTPUT_FILENAME
+set output OUTPUT_FILE
 replot
