@@ -1,6 +1,6 @@
 {
     "editor.rulers": [
-        100
+        80
     ],
     "latex-workshop.latex.outDir": "out",
     "latex-workshop.latex.autoBuild.run": "onFileChange",
