@@ -2,7 +2,8 @@
 変更したら青文字．削除されたものは赤文字で表示される．
 
 \section{algorithm}
-\begin{algorithmic}
+\begin{algorithm}
+\begin{algorithmic}[1]
     \Function{hello world}{} 
     \State $str \gets "hello world"$
     \For{$s$ in $str$}
@@ -10,6 +11,9 @@
     \EndFor
     \EndFunction
 \end{algorithmic}
+\caption{はろーわーるど}
+\label{alg:hello_world}
+\end{algorithm}
 
 \section{画像}
 
@@ -22,14 +26,14 @@
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=8cm]{images/replot.pdf}
+    \includegraphics[width=\linewidth]{images/replot.pdf}
     \caption{fragmasterテスト}
     \label{fig:fragmaster}
 \end{figure}
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=10cm]{images/sample.eps}
+    \includegraphics[width=\linewidth]{images/sample.eps}
     \caption{tgifテスト}
     \label{fig:tgif}
 \end{figure}
