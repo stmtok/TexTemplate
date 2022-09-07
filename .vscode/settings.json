@@ -8,7 +8,8 @@
         "diff/**"
     ],
     "latex-workshop.view.pdf.viewer": "browser",
-    "latex-workshop.view.pdf.backgroundColor": "#333333",
+    "latex-workshop.view.pdf.color.light.backgroundColor": "#333333",
+    "latex-workshop.view.pdf.color.dark.backgroundColor": "#333333",
     "latex-workshop.latex.recipe.default": "first",
     "latex-workshop.latex.recipes": [
         {
